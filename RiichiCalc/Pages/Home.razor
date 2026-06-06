@@ -1,0 +1,12 @@
+@page "/"
+@inject LanguageService Lang
+@implements IDisposable
+
+<PageTitle>@Lang.Get("RiichiCalculator")</PageTitle>
+
+<RiichiScoreCalculator />
+
+@code {
+    protected override void OnInitialized() => Lang.OnLanguageChanged += StateHasChanged;
+    public void Dispose() => Lang.OnLanguageChanged -= StateHasChanged;
+}

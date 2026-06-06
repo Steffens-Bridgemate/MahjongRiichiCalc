@@ -1,0 +1,27 @@
+@inherits LayoutComponentBase
+@inject LanguageService Lang
+@implements IDisposable
+
+<div class="app-shell">
+    <div class="app-card">
+        <header class="app-header">
+            <h1 class="app-title"><i class="bi bi-calculator-fill me-2"></i>@Lang.Get("RiichiCalculator")</h1>
+            <div class="lang-toggle">
+                @foreach (var lang in LanguageService.SupportedLanguages)
+                {
+                    var l = lang;
+                    <button type="button" class="lang-btn @(Lang.Language == l ? "active" : "")"
+                            @onclick="() => Lang.SetLanguage(l)">@l.ToUpperInvariant()</button>
+                }
+            </div>
+        </header>
+        <main class="app-body">
+            @Body
+        </main>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized() => Lang.OnLanguageChanged += StateHasChanged;
+    public void Dispose() => Lang.OnLanguageChanged -= StateHasChanged;
+}

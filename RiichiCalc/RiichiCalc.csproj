@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <OverrideHtmlAssetPlaceholders>true</OverrideHtmlAssetPlaceholders>
+    <RootNamespace>RiichiCalc</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.4" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Tsump.Shared is the source of truth for the calculator component + LanguageService.
+       In this standalone repo it is a git submodule at external/MahjongIndeler (used by CI).
+       During local development before the submodule exists, fall back to the sibling working
+       copy at ..\..\MahjongIndeler so the app builds and runs without a push. -->
+  <ItemGroup Condition="Exists('..\external\MahjongIndeler\Tsump.Shared\Tsump.Shared.csproj')">
+    <ProjectReference Include="..\external\MahjongIndeler\Tsump.Shared\Tsump.Shared.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="!Exists('..\external\MahjongIndeler\Tsump.Shared\Tsump.Shared.csproj')">
+    <ProjectReference Include="..\..\MahjongIndeler\Tsump.Shared\Tsump.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

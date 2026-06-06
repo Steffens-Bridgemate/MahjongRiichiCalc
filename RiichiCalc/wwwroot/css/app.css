@@ -1,0 +1,159 @@
+:root {
+    --accent: #1b5e20;
+    --accent-soft: #e6f4ea;
+    /* Tie the shared component's accent (result amount, result border) to the app theme. */
+    --club-primary: #1b5e20;
+    --club-primary-soft: #e6f4ea;
+}
+
+html, body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    background: linear-gradient(160deg, #f3f7f2 0%, #e7eee6 100%);
+    min-height: 100vh;
+    color: #1f2937;
+}
+
+/* Recolour the calculator's primary (selected) buttons to the app accent so the whole
+   page reads as one theme rather than Bootstrap blue inside a green frame. */
+.btn-primary {
+    --bs-btn-bg: var(--accent);
+    --bs-btn-border-color: var(--accent);
+    --bs-btn-hover-bg: #154a19;
+    --bs-btn-hover-border-color: #154a19;
+    --bs-btn-active-bg: #154a19;
+    --bs-btn-active-border-color: #154a19;
+    --bs-btn-disabled-bg: var(--accent);
+    --bs-btn-disabled-border-color: var(--accent);
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--accent);
+    --bs-btn-border-color: var(--accent);
+    --bs-btn-hover-bg: var(--accent);
+    --bs-btn-hover-border-color: var(--accent);
+    --bs-btn-active-bg: var(--accent);
+    --bs-btn-active-border-color: var(--accent);
+}
+
+.app-shell {
+    display: flex;
+    justify-content: center;
+    padding: clamp(0.5rem, 3vw, 2.5rem) 1rem;
+}
+
+.app-card {
+    width: 100%;
+    max-width: 44rem;
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(20, 40, 25, 0.12), 0 2px 6px rgba(20, 40, 25, 0.08);
+    overflow: hidden;
+}
+
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    padding: 1rem 1.25rem;
+    background: linear-gradient(120deg, var(--accent) 0%, #2e7d32 100%);
+    color: #fff;
+}
+
+.app-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.lang-toggle {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.lang-btn {
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    background: transparent;
+    color: #fff;
+    border-radius: 0.4rem;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.12s ease;
+}
+
+.lang-btn:hover {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.lang-btn.active {
+    background: #fff;
+    color: var(--accent);
+    border-color: #fff;
+}
+
+.app-body {
+    padding: 1.25rem;
+}
+
+/* Let the shared calculator use the full card width on this dedicated page. */
+.app-body .riichi-calc {
+    max-width: none;
+}
+
+.loading-progress {
+    position: relative;
+    display: block;
+    width: 8rem;
+    height: 8rem;
+    margin: 20vh auto 1rem;
+}
+
+.loading-progress circle {
+    fill: none;
+    stroke: #d7e3d8;
+    stroke-width: 0.6rem;
+    transform-origin: 50% 50%;
+    transform: rotate(-90deg);
+}
+
+.loading-progress circle:last-child {
+    stroke: var(--accent);
+    stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
+    transition: stroke-dasharray 0.05s ease-in-out;
+}
+
+.loading-progress-text {
+    text-align: center;
+    font-weight: bold;
+    position: absolute;
+    inset: calc(20vh + 3.25rem) 0 auto 0.2rem;
+}
+
+.loading-progress-text:after {
+    content: var(--blazor-load-percentage-text, "Loading");
+}
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
