@@ -1,5 +1,6 @@
 @inherits LayoutComponentBase
 @inject LanguageService Lang
+@inject LocalStorageService Storage
 @implements IDisposable
 
 <div class="app-shell">
@@ -11,7 +12,7 @@
                 {
                     var l = lang;
                     <button type="button" class="lang-btn @(Lang.Language == l ? "active" : "")"
-                            @onclick="() => Lang.SetLanguage(l)">@l.ToUpperInvariant()</button>
+                            @onclick="() => SetLanguage(l)">@l.ToUpperInvariant()</button>
                 }
             </div>
         </header>
@@ -22,6 +23,22 @@
 </div>
 
 @code {
-    protected override void OnInitialized() => Lang.OnLanguageChanged += StateHasChanged;
+    // The shared LanguageService has no persistence; this dedicated app stores the toggle
+    // choice itself. English is the default for the standalone calculator (≠ the club default).
+    private const string LangKey = "riichicalc.lang";
+
+    protected override async Task OnInitializedAsync()
+    {
+        Lang.OnLanguageChanged += StateHasChanged;
+        var stored = await Storage.GetAsync<string>(LangKey);
+        Lang.SetLanguage(string.IsNullOrEmpty(stored) ? "en" : stored);
+    }
+
+    private async Task SetLanguage(string lang)
+    {
+        Lang.SetLanguage(lang);
+        await Storage.SetAsync(LangKey, lang);
+    }
+
     public void Dispose() => Lang.OnLanguageChanged -= StateHasChanged;
 }
